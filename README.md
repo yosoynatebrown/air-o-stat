@@ -15,11 +15,12 @@ If the PM2.5 and PM10 levels fall below the specified lower bounds, the air filt
 # Prerequisites
 - Raspberry Pi with Raspbian or compatible OS.
 - PMS5003 air quality sensor.
+- Particulate Matter Sensor Breakout (for PMS5003)
 - Python 3.
 - RPi.GPIO library for GPIO pin control.
 - pms5003 Python library for interacting with the sensor.
 # Installation
-- run `./install.sh`
+- This is a fork of Pimoroni's PMS5003 Particulate Sensor library, first follow their installation instructions [here.](https://github.com/pimoroni/pms5003-python)
 - Ensure Python 3 and pip are installed.
 - Install the necessary Python libraries:
 `pip install RPi.GPIO pms5003`
