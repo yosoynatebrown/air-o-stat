@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # This script will run monitor_air.py
-# Passing default values of WHO guidelines for PM2.5 and PM10 exposure https://www.who.int/news-room/feature-stories/detail/what-are-the-who-air-quality-guidelines
+# Upper and lower bounds for PM2.5 and PM10 i.e. the thresholds for turning air filter on and off
+# Default values of WHO guidelines for PM2.5 and PM10 exposure 
+# https://www.who.int/news-room/feature-stories/detail/what-are-the-who-air-quality-guidelines
 pm25_ub=12
 pm25_lb=5
 pm10_ub=45
