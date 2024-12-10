@@ -1,50 +1,47 @@
-# PMS5003 Particulate Sensor
+# Air-O-Stat
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/pimoroni/pms5003-python/test.yml?branch=main)](https://github.com/pimoroni/pms5003-python/actions/workflows/test.yml)
-[![Coverage Status](https://coveralls.io/repos/github/pimoroni/pms5003-python/badge.svg?branch=main)](https://coveralls.io/github/pimoroni/pms5003-python?branch=main)
-[![PyPi Package](https://img.shields.io/pypi/v/pms5003.svg)](https://pypi.python.org/pypi/pms5003)
-[![Python Versions](https://img.shields.io/pypi/pyversions/pms5003.svg)](https://pypi.python.org/pypi/pms5003)
+This Python script reads PM2.5 and PM10 particle measurements from a PMS5003 air quality sensor and controls an air filter using a relay module (power strip) connected to a Raspberry Pi. It is configured to turn the air filter on or off based on specified upper and lower bounds for PM2.5 and PM10 levels.
 
-# Installing
+The script sets up the GPIO mode and configures GPIO pin 17 as an output to control the air filter.
+It continuously reads data from the PMS5003 sensor.
+If the PM2.5 or PM10 levels exceed the specified upper bounds, the air filter is turned on.
+If the PM2.5 and PM10 levels fall below the specified lower bounds, the air filter is turned off.
 
-**Note** The code in this repository supports both the Enviro+ and Enviro Mini boards. _The Enviro Mini board does not have the Gas sensor or the breakout for the PM sensor._
+# Features
+- Reads PM2.5 and PM10 data from a PMS5003 sensor.
+- Controls an air filter via a power strip relay (connected to GPIO pin 17).
+- Configurable thresholds for PM2.5 and PM10 with command-line arguments.
+- Option to enable verbose output for detailed measurements.
+# Prerequisites
+- Raspberry Pi with Raspbian or compatible OS.
+- PMS5003 air quality sensor.
+- Python 3.
+- RPi.GPIO library for GPIO pin control.
+- pms5003 Python library for interacting with the sensor.
+# Installation
+- run `./install.sh`
+- Ensure Python 3 and pip are installed.
+- Install the necessary Python libraries:
+`pip install RPi.GPIO pms5003`
+# Usage
+Run the script using Python and pass the required command-line arguments:
 
-![Enviro Plus pHAT](https://raw.githubusercontent.com/pimoroni/enviroplus-python/main/Enviro-Plus-pHAT.jpg)
-![Enviro Mini pHAT](https://raw.githubusercontent.com/pimoroni/enviroplus-python/main/Enviro-mini-pHAT.jpg)
-
-:warning: This library now supports Python 3 only, Python 2 is EOL - https://www.python.org/doc/sunset-python-2/
-
-## Install and configure dependencies from GitHub:
-
-* `git clone https://github.com/pimoroni/pms5003-python`
-* `cd pms5003-python`
-* `./install.sh`
-
-**Note** Libraries will be installed in the "pimoroni" virtual environment, you will need to activate it to run examples:
-
+Command-Line Arguments
+```--verbose, -v: Enable verbose output.
+--pm25-ub: Set the PM2.5 upper bound threshold (default: 12).
+--pm25-lb: Set the PM2.5 lower bound threshold (default: 5).
+--pm10-ub: Set the PM10 upper bound threshold (default: 45).
+--pm10-lb: Set the PM10 lower bound threshold (default: 15).
 ```
-source ~/.virtualenvs/pimoroni/bin/activate
+# Example
+Run the script with the default values:
+`./run.sh`
+Run the script with custom PM2.5 and PM10 thresholds and enable verbose mode:
+`./run.sh --pm25-ub=15 --pm25-lb=8 --pm10-ub=50 --pm10-lb=20 --verbose`
+
+When running in verbose mode, the script will print the current PM2.5 and PM10 measurements:
 ```
-
-**Note** Raspbian/Raspberry Pi OS Lite users may first need to install git: `sudo apt install git`
-
-## Or... Install from PyPi and configure manually:
-
-* `python3 -m venv --system-site-packages $HOME/.virtualenvs/pimoroni`
-* Run `python3 -m pip install pms5003`
-
-**Note** this will not perform any of the required configuration changes on your Pi, you may additionally need to:
-
-### Bookworm
-
-* Enable serial: `raspi-config nonint do_serial_hw 0`
-* Disable serial terminal: `raspi-config nonint do_serial_cons 1`
-* Add `dtoverlay=pi3-miniuart-bt` to your `/boot/config.txt`
-
-### Bullseye
-
-* Enable serial: `raspi-config nonint set_config_var enable_uart 1 /boot/config.txt`
-* Disable serial terminal: `sudo raspi-config nonint do_serial 1`
-* Add `dtoverlay=pi3-miniuart-bt` to your `/boot/config.txt`
-
-In both cases the last line will switch Bluetooth over to miniUART, see https://www.raspberrypi.org/documentation/configuration/uart.md for more details.
+PM2.5 ug/m3 (combustion particles, organic compounds, metals): 10.5
+PM10 ug/m3  (dust, pollen, mould spores): 30.2
+Turning air filter on...
+```
