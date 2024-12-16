@@ -25,7 +25,6 @@ If the PM2.5 and PM10 levels fall below the specified lower bounds, the air filt
 - Install the necessary Python libraries:
 `pip install RPi.GPIO pms5003`
 # Usage
-Run the script using Python and pass the required command-line arguments:
 
 Command-Line Arguments
 ```--verbose, -v: Enable verbose output.
@@ -35,8 +34,10 @@ Command-Line Arguments
 --pm10-lb: Set the PM10 lower bound threshold (default: 15).
 ```
 # Example
+
 Run the script with the default values:
 `./run.sh`
+
 Run the script with custom PM2.5 and PM10 thresholds and enable verbose mode:
 `./run.sh --pm25-ub=15 --pm25-lb=8 --pm10-ub=50 --pm10-lb=20 --verbose`
 
